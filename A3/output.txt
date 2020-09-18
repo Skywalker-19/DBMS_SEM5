@@ -1,0 +1,166 @@
+mysql> #2 Display all professor details from city Pune and Mumbai and Professor's first name starts with 'A' or 'D'
+mysql> select * from professors where prof_fname regexp '^[ad]' and city in ('Pune','Mumbai');
++---------+------------+------------+---------+--------------------+--------+------------+-------------------------+------------+--------+
+| prof_id | prof_fname | prof_lname | dept_id | designation        | salary | doj        | email                   | phone      | city   |
++---------+------------+------------+---------+--------------------+--------+------------+-------------------------+------------+--------+
+|       5 | Atul       | Patil      |       2 | Senior Professor   |  48000 | 06-10-2012 | atulpatil@gmail.com     | 8737846824 | Pune   |
+|       7 | Aditi      | Kulkarni   |       2 | Senior Lecturer    |  40000 | 01-01-2015 | aditikul8923@gmail.com  | 9984346735 | Pune   |
+|       9 | Ajay       | Khade      |       3 | Head of Department |  49000 | 25-10-2013 | ajitkhade2000@gmail.com | 9284663180 | Mumbai |
++---------+------------+------------+---------+--------------------+--------+------------+-------------------------+------------+--------+
+3 rows in set (0.00 sec)
+
+mysql> #3 List the number of different cities of Professors.(Use of distinct)
+mysql>
+mysql> select distinct city from professors;
++-----------+
+| city      |
++-----------+
+| Bangalore |
+| Ludhiana  |
+| Mumbai    |
+| Chennai   |
+| Pune      |
+| Kolkata   |
+| New Delhi |
+| Mysore    |
++-----------+
+8 rows in set (0.00 sec)
+
+mysql> #4 Give 5% increase in salary of the professors with Date of Join as 01-01-2015
+mysql>
+mysql> update professors set salary=salary*1.05 where doj='01-01-2015';
+Query OK, 2 rows affected (0.01 sec)
+Rows matched: 2  Changed: 2  Warnings: 0
+
+mysql> select * from professors;
++---------+------------+------------+---------+---------------------+--------+------------+--------------------------+------------+-----------+
+| prof_id | prof_fname | prof_lname | dept_id | designation         | salary | doj        | email                    | phone      | city      |
++---------+------------+------------+---------+---------------------+--------+------------+--------------------------+------------+-----------+
+|       1 | Satish     | Shetty     |       1 | Assistant Professor |  47250 | 01-01-2015 | ssshetty@gmail.com       | 8924451904 | Bangalore |
+|       2 | Aditya     | Singh      |       1 | Senior Lecturer     |  50000 | 14-08-2014 | adisingh@gmail.com       | 7228651963 | Ludhiana  |
+|       3 | Tanvi      | Prabhakar  |       1 | Junior Assistant    |  25000 | 23-12-2015 | tanvip2314@gmail.com     | 9128831388 | Mumbai    |
+|       4 | Jayasurya  | Iyer       |       2 | Head of Department  |  55000 | 11-04-2010 | jsurya3011@gmail.com     | 9781846430 | Chennai   |
+|       5 | Atul       | Patil      |       2 | Senior Professor    |  48000 | 06-10-2012 | atulpatil@gmail.com      | 8737846824 | Pune      |
+|       6 | Sourav     | Agarwal    |       2 | Junior Lecturer     |  30000 | 01-01-2016 | sourav.agarwal@gmail.com | 7922814092 | Kolkata   |
+|       7 | Aditi      | Kulkarni   |       2 | Senior Lecturer     |  42000 | 01-01-2015 | aditikul8923@gmail.com   | 9984346735 | Pune      |
+|       8 | Naman      | Gill       |       3 | Senior Assistant    |  30000 | 17-06-2014 | namangill1820@gmail.com  | 8927401034 | New Delhi |
+|       9 | Ajay       | Khade      |       3 | Head of Department  |  49000 | 25-10-2013 | ajitkhade2000@gmail.com  | 9284663180 | Mumbai    |
+|      10 | Neha       | Shetty     |       3 | Senior Lecturer     |  35000 | 13-05-2016 | nehashetty@gmail.com     | 7977830693 | Mysore    |
++---------+------------+------------+---------+---------------------+--------+------------+--------------------------+------------+-----------+
+10 rows in set (0.00 sec)
+
+mysql> #6 List names of professor belonging to Pune or Mumbai
+mysql>
+mysql> select prof_fname,prof_lname from professors where city='Mumbai' or city='Pune';
++------------+------------+
+| prof_fname | prof_lname |
++------------+------------+
+| Tanvi      | Prabhakar  |
+| Atul       | Patil      |
+| Aditi      | Kulkarni   |
+| Ajay       | Khade      |
++------------+------------+
+4 rows in set (0.00 sec)
+
+mysql> #7 Professors who joined on 01-01-2015 or 01-01-2016
+mysql>
+mysql> select prof_fname,prof_lname from professors where doj='01-01-2015' or doj='01-01-2016';
++------------+------------+
+| prof_fname | prof_lname |
++------------+------------+
+| Satish     | Shetty     |
+| Sourav     | Agarwal    |
+| Aditi      | Kulkarni   |
++------------+------------+
+3 rows in set (0.00 sec)
+
+mysql> #8 Find professor having maximum salary between 10,000 and 20,000
+mysql>
+mysql> select * from professors where salary between 10000 and 20000;
+Empty set (0.00 sec)
+
+mysql> #9 Display all professors name with salary and date of join with decreasing order of salary
+mysql>
+mysql> select prof_fname,salary,doj from professors order by salary desc;
++------------+--------+------------+
+| prof_fname | salary | doj        |
++------------+--------+------------+
+| Jayasurya  |  55000 | 11-04-2010 |
+| Aditya     |  50000 | 14-08-2014 |
+| Ajay       |  49000 | 25-10-2013 |
+| Atul       |  48000 | 06-10-2012 |
+| Satish     |  47250 | 01-01-2015 |
+| Aditi      |  42000 | 01-01-2015 |
+| Neha       |  35000 | 13-05-2016 |
+| Sourav     |  30000 | 01-01-2016 |
+| Naman      |  30000 | 17-06-2014 |
+| Tanvi      |  25000 | 23-12-2015 |
++------------+--------+------------+
+10 rows in set (0.00 sec)
+
+mysql> #10 Display professor's name, doj and dept_id with salary 30000, 40000 and 50000
+mysql>
+mysql> select prof_fname,doj,dept_id from professors where salary in (30000,40000,50000);
++------------+------------+---------+
+| prof_fname | doj        | dept_id |
++------------+------------+---------+
+| Aditya     | 14-08-2014 |       1 |
+| Sourav     | 01-01-2016 |       2 |
+| Naman      | 17-06-2014 |       3 |
++------------+------------+---------+
+3 rows in set (0.00 sec)
+
+mysql>  update professors
+    -> set salary=18000
+    -> where prof_id=4;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> #8 Find professor having maximum salary between 10,000 and 20,000
+mysql>
+mysql> select max(salary) from professors where salary between 10000 and 20000;
++-------------+
+| max(salary) |
++-------------+
+|       18000 |
++-------------+
+1 row in set (0.01 sec)
+
+mysql> #5 Delete professor details living in Pune.
+mysql>
+mysql> select * from professors;
++---------+------------+------------+---------+---------------------+--------+------------+--------------------------+------------+-----------+
+| prof_id | prof_fname | prof_lname | dept_id | designation         | salary | doj        | email                    | phone      | city      |
++---------+------------+------------+---------+---------------------+--------+------------+--------------------------+------------+-----------+
+|       1 | Satish     | Shetty     |       1 | Assistant Professor |  47250 | 01-01-2015 | ssshetty@gmail.com       | 8924451904 | Bangalore |
+|       2 | Aditya     | Singh      |       1 | Senior Lecturer     |  50000 | 14-08-2014 | adisingh@gmail.com       | 7228651963 | Ludhiana  |
+|       3 | Tanvi      | Prabhakar  |       1 | Junior Assistant    |  25000 | 23-12-2015 | tanvip2314@gmail.com     | 9128831388 | Mumbai    |
+|       4 | Jayasurya  | Iyer       |       2 | Head of Department  |  18000 | 11-04-2010 | jsurya3011@gmail.com     | 9781846430 | Chennai   |
+|       5 | Atul       | Patil      |       2 | Senior Professor    |  48000 | 06-10-2012 | atulpatil@gmail.com      | 8737846824 | Pune      |
+|       6 | Sourav     | Agarwal    |       2 | Junior Lecturer     |  30000 | 01-01-2016 | sourav.agarwal@gmail.com | 7922814092 | Kolkata   |
+|       7 | Aditi      | Kulkarni   |       2 | Senior Lecturer     |  42000 | 01-01-2015 | aditikul8923@gmail.com   | 9984346735 | Pune      |
+|       8 | Naman      | Gill       |       3 | Senior Assistant    |  30000 | 17-06-2014 | namangill1820@gmail.com  | 8927401034 | New Delhi |
+|       9 | Ajay       | Khade      |       3 | Head of Department  |  49000 | 25-10-2013 | ajitkhade2000@gmail.com  | 9284663180 | Mumbai    |
+|      10 | Neha       | Shetty     |       3 | Senior Lecturer     |  35000 | 13-05-2016 | nehashetty@gmail.com     | 7977830693 | Mysore    |
++---------+------------+------------+---------+---------------------+--------+------------+--------------------------+------------+-----------+
+10 rows in set (0.00 sec)
+
+mysql> delete from professors where city='Pune';
+Query OK, 2 rows affected (0.01 sec)
+
+mysql> select * from professors;
++---------+------------+------------+---------+---------------------+--------+------------+--------------------------+------------+-----------+
+| prof_id | prof_fname | prof_lname | dept_id | designation         | salary | doj        | email                    | phone      | city      |
++---------+------------+------------+---------+---------------------+--------+------------+--------------------------+------------+-----------+
+|       1 | Satish     | Shetty     |       1 | Assistant Professor |  47250 | 01-01-2015 | ssshetty@gmail.com       | 8924451904 | Bangalore |
+|       2 | Aditya     | Singh      |       1 | Senior Lecturer     |  50000 | 14-08-2014 | adisingh@gmail.com       | 7228651963 | Ludhiana  |
+|       3 | Tanvi      | Prabhakar  |       1 | Junior Assistant    |  25000 | 23-12-2015 | tanvip2314@gmail.com     | 9128831388 | Mumbai    |
+|       4 | Jayasurya  | Iyer       |       2 | Head of Department  |  18000 | 11-04-2010 | jsurya3011@gmail.com     | 9781846430 | Chennai   |
+|       6 | Sourav     | Agarwal    |       2 | Junior Lecturer     |  30000 | 01-01-2016 | sourav.agarwal@gmail.com | 7922814092 | Kolkata   |
+|       8 | Naman      | Gill       |       3 | Senior Assistant    |  30000 | 17-06-2014 | namangill1820@gmail.com  | 8927401034 | New Delhi |
+|       9 | Ajay       | Khade      |       3 | Head of Department  |  49000 | 25-10-2013 | ajitkhade2000@gmail.com  | 9284663180 | Mumbai    |
+|      10 | Neha       | Shetty     |       3 | Senior Lecturer     |  35000 | 13-05-2016 | nehashetty@gmail.com     | 7977830693 | Mysore    |
++---------+------------+------------+---------+---------------------+--------+------------+--------------------------+------------+-----------+
+8 rows in set (0.00 sec)
+
+mysql>
