@@ -1,0 +1,31 @@
+create procedure calcheck(in id int,in scheme varchar(20))
+begin
+declare date1 date;
+declare date2 date;
+declare delay int default 0;
+declare amount double default 0.0;
+declare exit handler for 1062
+select 'duplicate error' as message;
+
+declare exit handler for not found
+select 'record not found' as message;
+
+select dateofpayment from customer where cust_id=id and scheme_name=scheme into date1;
+ 
+select curdate() into date2;
+ 
+select datediff(date2,date1) into delay;
+
+if delay>30 then
+set amount = (delay - 30)*50 + 15*5;
+elseif delay>15 then
+set amount = (delay - 15)*5;
+
+else
+set amount=0;
+end if;
+
+insert into fine value(id,date2,amount);
+update customer set status="P" where cust_id=id;
+
+end

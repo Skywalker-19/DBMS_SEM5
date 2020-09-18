@@ -1,0 +1,26 @@
+create database fine_schema;
+
+use fine_schema;
+
+create table customer(
+    cust_id int not null ,
+    name varchar(32) not null ,
+    dateofpayment date not null ,
+    scheme_name varchar(32),
+    status varchar(1) not null
+
+);
+
+create table fine(
+    cust_id int not null ,
+    paymentdate date not null ,
+    Amount int not null
+);
+
+alter table customer add primary key (cust_id);
+
+alter table fine add primary key (cust_id);
+
+alter table fine add constraint fk_cust_id
+foreign key (cust_id) references customer(cust_id)
+on delete cascade ;

@@ -1,0 +1,172 @@
+Enter password: **********
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 8
+Server version: 8.0.21 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2020, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> use fine_schema;
+Database changed
+mysql> desc fine_schema;
+ERROR 1146 (42S02): Table 'fine_schema.fine_schema' doesn't exist
+mysql> desc customers;
+ERROR 1146 (42S02): Table 'fine_schema.customers' doesn't exist
+mysql> desc customer;
++---------------+-------------+------+-----+---------+-------+
+| Field         | Type        | Null | Key | Default | Extra |
++---------------+-------------+------+-----+---------+-------+
+| cust_id       | int         | NO   | PRI | NULL    |       |
+| name          | varchar(20) | YES  |     | NULL    |       |
+| dateofpayment | date        | NO   |     | NULL    |       |
+| scheme_name   | varchar(20) | NO   |     | NULL    |       |
+| status        | varchar(10) | YES  |     | NULL    |       |
++---------------+-------------+------+-----+---------+-------+
+5 rows in set (0.04 sec)
+
+mysql> call calcheck(1,"fine");
++------------------+
+| message          |
++------------------+
+| record not found |
++------------------+
+1 row in set (0.07 sec)
+
+Query OK, 0 rows affected (0.07 sec)
+
+mysql> select * from customer;
++---------+------+---------------+-------------+--------+
+| cust_id | name | dateofpayment | scheme_name | status |
++---------+------+---------------+-------------+--------+
+|       1 | Sam  | 2019-01-18    | Medical     | P      |
++---------+------+---------------+-------------+--------+
+1 row in set (0.01 sec)
+
+mysql> delete from customer where cust_id=1;
+Query OK, 1 row affected (0.03 sec)
+
+mysql> select * from customer;
+Empty set (0.00 sec)
+
+mysql> insert into customer (cust_id, name, dateofpayment, scheme_name, status)values(1, 'Jagdish Koshy','2020-08-06','fixed_deposit','N'),(2, 'Koushtubh Sood','2020-09-01','recurring_deposit','N'),(3, 'Sapna Lad','2020-08-22','platinum','N'),(4, 'Hema Puri','2020-07-19','currunent_deposit','N'),(5, 'Kushal Solanki','2020-08-28','basic_deposit','N'),(6, 'Rita Inani','2020-08-15','basic_deposit','N'),(7, 'Tanay Parikh','2020-07-12','platinum','N'),(8, 'Bhanupriya Dhawan','2020-08-10','recurring_deposit','N'),(9, 'Himani Sachar','2020-09-01','basic_deposit','N'),(10, 'Anusha Srinivasan','2020-08-22','currunent_deposit','N'),(11, 'Anil Badal','2020-08-02','fixed_deposit','N'),(12, 'Charu Dodiya','2020-07-30','recurring_deposit','N'),(13, 'Tulsi Mathew','2020-08-20','recurring_deposit','N'),(14, 'Kailash Sengupta','2020-08-04','basic_deposit','N');
+Query OK, 14 rows affected (0.01 sec)
+Records: 14  Duplicates: 0  Warnings: 0
+
+mysql> select * from customer;
++---------+-------------------+---------------+-------------------+--------+
+| cust_id | name              | dateofpayment | scheme_name       | status |
++---------+-------------------+---------------+-------------------+--------+
+|       1 | Jagdish Koshy     | 2020-08-06    | fixed_deposit     | N      |
+|       2 | Koushtubh Sood    | 2020-09-01    | recurring_deposit | N      |
+|       3 | Sapna Lad         | 2020-08-22    | platinum          | N      |
+|       4 | Hema Puri         | 2020-07-19    | currunent_deposit | N      |
+|       5 | Kushal Solanki    | 2020-08-28    | basic_deposit     | N      |
+|       6 | Rita Inani        | 2020-08-15    | basic_deposit     | N      |
+|       7 | Tanay Parikh      | 2020-07-12    | platinum          | N      |
+|       8 | Bhanupriya Dhawan | 2020-08-10    | recurring_deposit | N      |
+|       9 | Himani Sachar     | 2020-09-01    | basic_deposit     | N      |
+|      10 | Anusha Srinivasan | 2020-08-22    | currunent_deposit | N      |
+|      11 | Anil Badal        | 2020-08-02    | fixed_deposit     | N      |
+|      12 | Charu Dodiya      | 2020-07-30    | recurring_deposit | N      |
+|      13 | Tulsi Mathew      | 2020-08-20    | recurring_deposit | N      |
+|      14 | Kailash Sengupta  | 2020-08-04    | basic_deposit     | N      |
++---------+-------------------+---------------+-------------------+--------+
+14 rows in set (0.00 sec)
+
+mysql> drop procedure calcheck;
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> delimiter //
+
+mysql> create procedure calcheck(in id int,in scheme varchar(20))
+    -> begin
+    -> declare date1 date;
+    -> declare date2 date;
+    -> declare delay int default 0;
+    -> declare amount double default 0.0;
+    ->
+    -> declare exit handler for 1062
+    -> select 'duplicate error' as message;
+    ->
+    -> declare exit handler for not found
+    -> select 'record not found' as message;
+    ->
+    -> select dateofpayment from customer where cust_id=id and scheme_name=scheme into date1;
+    ->
+    -> select curdate() into date2;
+    ->
+    -> select datediff(date2,date1) into delay;
+    ->
+    -> if delay>30 then
+    -> set amount = (delay - 30)*50 + 15*5;
+    -> elseif delay>15 then
+    -> set amount = (delay - 15)*5;
+    ->
+    -> else
+    -> set amount=0;
+    -> end if;
+    ->
+    -> insert into fine value(id,date2,amount);
+    -> update customer set status="P" where cust_id=id;
+    ->
+    -> end
+    -> //
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> delimiter ;
+mysql> call calcheck(1,"fixed_deposit");
+Query OK, 1 row affected (0.02 sec)
+
+mysql> select * from fine;
++---------+-------------+--------+
+| cust_id | paymentdate | Amount |
++---------+-------------+--------+
+|       1 | 2020-09-14  |    525 |
++---------+-------------+--------+
+1 row in set (0.00 sec)
+
+mysql> select * from customer;
++---------+-------------------+---------------+-------------------+--------+
+| cust_id | name              | dateofpayment | scheme_name       | status |
++---------+-------------------+---------------+-------------------+--------+
+|       1 | Jagdish Koshy     | 2020-08-06    | fixed_deposit     | P      |
+|       2 | Koushtubh Sood    | 2020-09-01    | recurring_deposit | N      |
+|       3 | Sapna Lad         | 2020-08-22    | platinum          | N      |
+|       4 | Hema Puri         | 2020-07-19    | currunent_deposit | N      |
+|       5 | Kushal Solanki    | 2020-08-28    | basic_deposit     | N      |
+|       6 | Rita Inani        | 2020-08-15    | basic_deposit     | N      |
+|       7 | Tanay Parikh      | 2020-07-12    | platinum          | N      |
+|       8 | Bhanupriya Dhawan | 2020-08-10    | recurring_deposit | N      |
+|       9 | Himani Sachar     | 2020-09-01    | basic_deposit     | N      |
+|      10 | Anusha Srinivasan | 2020-08-22    | currunent_deposit | N      |
+|      11 | Anil Badal        | 2020-08-02    | fixed_deposit     | N      |
+|      12 | Charu Dodiya      | 2020-07-30    | recurring_deposit | N      |
+|      13 | Tulsi Mathew      | 2020-08-20    | recurring_deposit | N      |
+|      14 | Kailash Sengupta  | 2020-08-04    | basic_deposit     | N      |
++---------+-------------------+---------------+-------------------+--------+
+14 rows in set (0.00 sec)
+
+mysql> call calcheck(15,"basic_deposit");
++------------------+
+| message          |
++------------------+
+| record not found |
++------------------+
+1 row in set (0.00 sec)
+
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> call calcheck(7,"abc");
++------------------+
+| message          |
++------------------+
+| record not found |
++------------------+
+1 row in set (0.01 sec)
+
+Query OK, 0 rows affected (0.01 sec)
