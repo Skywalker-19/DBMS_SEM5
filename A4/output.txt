@@ -1,0 +1,154 @@
+"C:\Users\Swatej Sonawane\.jdks\openjdk-14.0.2\bin\java.exe" "-javaagent:D:\IntelliJ IDEA
+2020.2\lib\idea_rt.jar=50582:D:\IntelliJ IDEA 2020.2\bin" -Dfile.encoding=UTF-8 -classpath 
+"D:\bluej\Assignments\DBMS\out\production\DBMS;C:\Users\Swatej Sonawane\Downloads\mysqlconnector-java-8.0.21" jdbc
+Menu:
+1.Simple View
+2.Complex View
+3.Drop view
+4.Simple index
+5.Unique Index
+6.Compound index
+7.Show Index
+8.drop index
+9.Auto-Increment
+0.Exit:
+1
+1 Satish
+2 Aditya
+3 Tanvi
+4 Jayasurya
+5 Atul
+6 Sourav
+7 Aditi
+8 Naman
+9 Ajay
+10 Neha
+Menu:
+1.Simple View
+2.Complex View
+3.Drop view
+4.Simple index 
+5.Unique Index
+6.Compound index
+7.Show Index
+8.drop index
+9.Auto-Increment
+0.Exit:
+2
+1 Satish
+2 Aditya
+3 Tanvi
+4 Jayasurya
+5 Atul
+6 Sourav
+7 Aditi
+8 Naman
+9 Ajay
+10 Neha
+Menu:
+1.Simple View
+2.Complex View
+3.Drop view
+4.Simple index
+5.Unique Index
+6.Compound index
+7.Show Index
+8.drop index
+9.Auto-Increment
+0.Exit:
+3
+Query OK!
+Menu:
+1.Simple View
+2.Complex View
+3.Drop view
+4.Simple index
+5.Unique Index
+6.Compound index
+7.Show Index
+8.drop index
+9.Auto-Increment
+0.Exit:
+4
+Menu:
+1.Simple View
+2.Complex View
+3.Drop view
+4.Simple index
+5.Unique Index
+6.Compound index
+7.Show Index
+8.drop index
+9.Auto-Increment
+0.Exit:
+5
+Menu:
+1.Simple View
+2.Complex View
+3.Drop view 
+4.Simple index
+5.Unique Index
+6.Compound index
+7.Show Index
+8.drop index
+9.Auto-Increment
+0.Exit:
+6
+Menu:
+1.Simple View
+2.Complex View
+3.Drop view
+4.Simple index
+5.Unique Index
+6.Compound index
+7.Show Index
+8.drop index
+9.Auto-Increment
+0.Exit:
+7
+professors 0 PRIMARY prof_id
+professors 0 prof2 prof_fname
+professors 1 dept_id dept_id
+professors 1 prof1 prof_fname
+professors 1 prof3 prof_fname
+professors 1 prof3 prof_lname
+Menu:
+1.Simple View
+2.Complex View 
+3.Drop view
+4.Simple index
+5.Unique Index
+6.Compound index
+7.Show Index
+8.drop index
+9.Auto-Increment
+0.Exit:
+8
+Menu:
+1.Simple View
+2.Complex View
+3.Drop view
+4.Simple index
+5.Unique Index
+6.Compound index
+7.Show Index
+8.drop index
+9.Auto-Increment
+0.Exit:
+9
+ID Name
+1 Samir
+2 Suyash
+Menu:
+1.Simple View
+2.Complex View
+3.Drop view
+4.Simple index 
+5.Unique Index
+6.Compound index
+7.Show Index
+8.drop index
+9.Auto-Increment
+0.Exit:
+0
+Process finished with exit code 0
