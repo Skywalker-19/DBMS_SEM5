@@ -1,0 +1,198 @@
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| sakila             |
+| sys                |
+| world              |
++--------------------+
+6 rows in set (0.01 sec)
+
+mysql> create database professor_schema;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> use professor_schema;
+Database changed
+mysql> create table departments(dept_id int,dept_name varchar(20) not null, primary key(dept_id));
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> desc departments;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| dept_id   | int         | NO   | PRI | NULL    |       |
+| dept_name | varchar(20) | NO   |     | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+2 rows in set (0.02 sec)
+
+mysql> create table professors(prof_id int, prof_fname varchar(10),prof_lname varchar(20), dept_id int,designation varchar(30),salary double,doj varchar(10),email varchar(30),phone varchar(10),city varchar(20),primary key(prof_id));
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> alter table professors add foreign key(dept_id) references departments(dept_id)
+    -> on delete cascade;
+Query OK, 0 rows affected (0.11 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> select * from professors;
+Empty set (0.00 sec)
+
+mysql> desc professors;
++-------------+-------------+------+-----+---------+-------+
+| Field       | Type        | Null | Key | Default | Extra |
++-------------+-------------+------+-----+---------+-------+
+| prof_id     | int         | NO   | PRI | NULL    |       |
+| prof_fname  | varchar(10) | YES  |     | NULL    |       |
+| prof_lname  | varchar(20) | YES  |     | NULL    |       |
+| dept_id     | int         | YES  | MUL | NULL    |       |
+| designation | varchar(30) | YES  |     | NULL    |       |
+| salary      | double      | YES  |     | NULL    |       |
+| doj         | varchar(10) | YES  |     | NULL    |       |
+| email       | varchar(30) | YES  |     | NULL    |       |
+| phone       | varchar(10) | YES  |     | NULL    |       |
+| city        | varchar(20) | YES  |     | NULL    |       |
++-------------+-------------+------+-----+---------+-------+
+10 rows in set (0.01 sec)
+
+mysql> create table works(prof_id int, dept_id int, duration varchar(10));
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> alter table works add foreign key(prof_id) references professors(prof_id)
+    -> on delete cascade;
+Query OK, 0 rows affected (0.11 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table works add foreign key(dept_id) references departments(dept_id)
+    -> on delete cascade;
+Query OK, 0 rows affected (0.06 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc works;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| prof_id  | int         | YES  | MUL | NULL    |       |
+| dept_id  | int         | YES  | MUL | NULL    |       |
+| duration | varchar(10) | YES  |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+3 rows in set (0.01 sec)
+
+mysql> create table shifts(prof_id int, shift varchar(10), working_hours varchar(10));
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> alter table shifts add foreign key(prof_id) references professors(prof_id)
+    -> on delete cascade;
+Query OK, 0 rows affected (0.10 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc shifts;
++---------------+-------------+------+-----+---------+-------+
+| Field         | Type        | Null | Key | Default | Extra |
++---------------+-------------+------+-----+---------+-------+
+| prof_id       | int         | YES  | MUL | NULL    |       |
+| shift         | varchar(10) | YES  |     | NULL    |       |
+| working_hours | varchar(10) | YES  |     | NULL    |       |
++---------------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+
+mysql> insert into departments values(1,'CE');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into departments values(2,'IT');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into departments values(3,'ENTC');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into professors values(1,'Satish','Shetty',1,'Assistant Professor',45000.0,'01-01-2015','ssshetty@gmail.com',8924451904,'Bangalore');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into professors values(2,'Aditya','Singh',1,'Senior Lecturer',50000.0,'14-08-2014','adisingh@gmail.com',7228651963,'Ludhiana');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into professors values(3,'Tanvi','Prabhakar',1,'Junior Assistant',25000.0,'23-12-2015','tanvip2314@gmail.com',9128831388,'Mumbai');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into professors values(4,'Jayasurya','Iyer',2,'Head of Department',55000.0,'11-04-2010','jsurya3011@gmail.com',9781846430,'Chennai');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into professors values(5,'Atul','Patil',2,'Senior Professor',48000.0,'06-10-2012','atulpatil@gmail.com',8737846824,'Pune');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into professors values(6,'Sourav','Agarwal',2,'Junior Lecturer',30000.0,'01-01-2016','sourav.agarwal@gmail.com',7922814092,'Kolkata');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into professors values(7,'Aditi','Kulkarni',2,'Senior Lecturer',40000.0,'01-01-2015','aditikul8923@gmail.com',9984346735,'Pune');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into professors values(8,'Naman','Gill',3,'Senior Assistant',30000.0,'17-06-2014','namangill1820@gmail.com',8927401034,'New Delhi');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into professors values(9,'Ajay','Khade',3,'Head of Department',49000.0,'25-10-2013','ajitkhade2000@gmail.com',9284663180,'Mumbai');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into professors values(10,'Neha','Shetty',3,'Senior Lecturer',35000.0,'3-05-2016','nehashetty@gmail.com',7977830693,'Mysore');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into works values(1,1,'3 yrs');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into works values(2,1,'4 yrs');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into works values(3,1,'3 yrs');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into works values(4,2,'8 yrs');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into works values(5,2,'6 yrs');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into works values(6,2,'2 yrs');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into works values(7,2,'3 yrs');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into works values(8,3,'4 yrs');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into works values(9,3,'5 yrs');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into works values(10,3,'2 yrs');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into shifts values(1,'Morning','5 hrs');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into shifts values(2,'Morning','4 hrs');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into shifts values(3,'Evening','5 hrs');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into shifts values(4,'Morning','3 hrs');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into shifts values(5,'Evening','5 hrs');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into shifts values(6,'Evening','6 hrs');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into shifts values(7,'Morning','4 hrs');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into shifts values(8,'Morning','6 hrs');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into shifts values(9,'Evening','5 hrs');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into shifts values(10,'Morning','5 hrs');
+Query OK, 1 row affected (0.01 sec)

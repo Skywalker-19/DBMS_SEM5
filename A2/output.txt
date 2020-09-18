@@ -1,0 +1,62 @@
+
+
+mysql> select * from departments;
++---------+-----------+
+| dept_id | dept_name |
++---------+-----------+
+|       1 | CE        |
+|       2 | IT        |
+|       3 | ENTC      |
++---------+-----------+
+3 rows in set (0.01 sec)
+
+mysql> select * from professors;
++---------+------------+------------+---------+---------------------+--------+------------+--------------------------+------------+-----------+
+| prof_id | prof_fname | prof_lname | dept_id | designation         | salary | doj        | email                    | phone      | city      |
++---------+------------+------------+---------+---------------------+--------+------------+--------------------------+------------+-----------+
+|       1 | Satish     | Shetty     |       1 | Assistant Professor |  45000 | 01-01-2015 | ssshetty@gmail.com       | 8924451904 | Bangalore |
+|       2 | Aditya     | Singh      |       1 | Senior Lecturer     |  50000 | 14-08-2014 | adisingh@gmail.com       | 7228651963 | Ludhiana  |
+|       3 | Tanvi      | Prabhakar  |       1 | Junior Assistant    |  25000 | 23-12-2015 | tanvip2314@gmail.com     | 9128831388 | Mumbai    |
+|       4 | Jayasurya  | Iyer       |       2 | Head of Department  |  55000 | 11-04-2010 | jsurya3011@gmail.com     | 9781846430 | Chennai   |
+|       5 | Atul       | Patil      |       2 | Senior Professor    |  48000 | 06-10-2012 | atulpatil@gmail.com      | 8737846824 | Pune      |
+|       6 | Sourav     | Agarwal    |       2 | Junior Lecturer     |  30000 | 01-01-2016 | sourav.agarwal@gmail.com | 7922814092 | Kolkata   |
+|       7 | Aditi      | Kulkarni   |       2 | Senior Lecturer     |  40000 | 01-01-2015 | aditikul8923@gmail.com   | 9984346735 | Pune      |
+|       8 | Naman      | Gill       |       3 | Senior Assistant    |  30000 | 17-06-2014 | namangill1820@gmail.com  | 8927401034 | New Delhi |
+|       9 | Ajay       | Khade      |       3 | Head of Department  |  49000 | 25-10-2013 | ajitkhade2000@gmail.com  | 9284663180 | Mumbai    |
+|      10 | Neha       | Shetty     |       3 | Senior Lecturer     |  35000 | 13-05-2016 | nehashetty@gmail.com     | 7977830693 | Mysore    |
++---------+------------+------------+---------+---------------------+--------+------------+--------------------------+------------+-----------+
+10 rows in set (0.00 sec)
+
+mysql> select * from works;
++---------+---------+----------+
+| prof_id | dept_id | duration |
++---------+---------+----------+
+|       1 |       1 | 3 yrs    |
+|       2 |       1 | 4 yrs    |
+|       3 |       1 | 3 yrs    |
+|       4 |       2 | 8 yrs    |
+|       5 |       2 | 6 yrs    |
+|       6 |       2 | 2 yrs    |
+|       7 |       2 | 3 yrs    |
+|       8 |       3 | 4 yrs    |
+|       9 |       3 | 5 yrs    |
+|      10 |       3 | 2 yrs    |
++---------+---------+----------+
+10 rows in set (0.00 sec)
+
+mysql> select * from shifts;
++---------+---------+---------------+
+| prof_id | shift   | working_hours |
++---------+---------+---------------+
+|       1 | Morning | 5 hrs         |
+|       2 | Morning | 4 hrs         |
+|       3 | Evening | 5 hrs         |
+|       4 | Morning | 3 hrs         |
+|       5 | Evening | 5 hrs         |
+|       6 | Evening | 6 hrs         |
+|       7 | Morning | 4 hrs         |
+|       8 | Morning | 6 hrs         |
+|       9 | Evening | 5 hrs         |
+|      10 | Morning | 5 hrs         |
++---------+---------+---------------+
+10 rows in set (0.01 sec)
