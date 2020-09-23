@@ -1,0 +1,37 @@
+mysql> create database A6_merge;
+Query OK, 1 row affected (0.04 sec)
+
+mysql> use A6_merge;
+Database changed
+mysql>
+mysql> create table o_emp(empid int, name varchar(30));
+Query OK, 0 rows affected (0.24 sec)
+
+mysql> alter table o_emp add primary key(empid);
+Query OK, 0 rows affected (0.12 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> create table n_emp(empid int, name varchar(30));
+Query OK, 0 rows affected (0.10 sec)
+
+mysql> alter table n_emp add primary key(empid);
+Query OK, 0 rows affected (0.12 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc o_emp;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| empid | int         | NO   | PRI | NULL    |       |
+| name  | varchar(30) | YES  |     | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+2 rows in set (0.02 sec)
+
+mysql> desc n_emp;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| empid | int         | NO   | PRI | NULL    |       |
+| name  | varchar(30) | YES  |     | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+2 rows in set (0.00 sec)

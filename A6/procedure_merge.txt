@@ -1,0 +1,21 @@
+delimiter //
+create procedure merge()
+begin
+declare v_finished int default 0;
+declare emp_id int;
+declare emp_name varchar(30);
+declare cur1 CURSOR FOR select empid,name from o_emp;
+declare continue handler for 1062 select 'duplicates not merged' as message;
+declare continue handler for not found
+set v_finished=1;
+open cur1;
+read_loop:loop
+fetch cur1 into emp_id,emp_name;
+if v_finished=1 then
+leave read_loop;
+end if;
+insert into n_emp values(emp_id,emp_name);
+end loop read_loop;
+close cur1;
+end;
+//

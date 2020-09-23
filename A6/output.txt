@@ -1,0 +1,97 @@
+mysql> insert into o_emp values(1,'Swatej');
+Query OK, 1 row affected (0.03 sec)
+
+mysql> insert into o_emp values(2,'Tejas');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into o_emp values(3,'Sooraj');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into o_emp values(4,'Utkarsh');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into o_emp values(5,'Prachi');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into n_emp values(1,'Swatej');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into n_emp values(2,'Tejas');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from o_emp;
++-------+---------+
+| empid | name    |
++-------+---------+
+|     1 | Swatej  |
+|     2 | Tejas   |
+|     3 | Sooraj  |
+|     4 | Utkarsh |
+|     5 | Prachi  |
++-------+---------+
+5 rows in set (0.00 sec)
+
+mysql> select * from n_emp;
++-------+--------+
+| empid | name   |
++-------+--------+
+|     1 | Swatej |
+|     2 | Tejas  |
++-------+--------+
+2 rows in set (0.00 sec)
+
+mysql> delimiter //
+mysql> create procedure merge()
+    -> begin
+    -> declare v_finished int default 0;
+    -> declare emp_id int;
+    -> declare emp_name varchar(30);
+    -> declare cur1 CURSOR FOR select empid,name from o_emp;
+    -> declare continue handler for 1062 select 'duplicates not merged' as message;
+    -> declare continue handler for not found
+    -> set v_finished=1;
+    -> open cur1;
+    -> read_loop:loop
+    -> fetch cur1 into emp_id,emp_name;
+    -> if v_finished=1 then
+    -> leave read_loop;
+    -> end if;
+    -> insert into n_emp values(emp_id,emp_name);
+    -> end loop read_loop;
+    -> close cur1;
+    -> end;
+    -> //
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> delimiter ;
+mysql>
+mysql> call merge();
++-----------------------+
+| message               |
++-----------------------+
+| duplicates not merged |
++-----------------------+
+1 row in set (0.01 sec)
+
++-----------------------+
+| message               |
++-----------------------+
+| duplicates not merged |
++-----------------------+
+1 row in set (0.01 sec)
+
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> select * from n_emp;
++-------+---------+
+| empid | name    |
++-------+---------+
+|     1 | Swatej  |
+|     2 | Tejas   |
+|     3 | Sooraj  |
+|     4 | Utkarsh |
+|     5 | Prachi  |
++-------+---------+
+5 rows in set (0.00 sec)
+
+mysql>
